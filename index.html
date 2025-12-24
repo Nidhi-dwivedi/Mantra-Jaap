@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>🕉️ Mantra Jaap</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="lotus-bg"></div>
+
+  <div class="container">
+    <div class="om">ॐ</div>
+    <h1>Mantra Jaap</h1>
+    <p class="subtitle">Chant mindfully • Count like a mala</p>
+
+    <select id="mantraSelect">
+      <option value="">— Select Mantra —</option>
+      <option value="gayatri">Gayatri Mantra</option>
+      <option value="krishna">Krishna Mahamantra</option>
+      <option value="custom">➕ Add Your Own Mantra</option>
+    </select>
+
+    <textarea
+      id="customMantra"
+      placeholder="Write your mantra here…"
+      hidden></textarea>
+
+    <button id="saveBtn" hidden>💾 Save Mantra</button>
+
+    <div class="mantra-box" id="mantraDisplay">
+      Choose a mantra and begin your sadhana
+    </div>
+
+    <div class="counter">
+      <span id="count">0</span> / 108
+    </div>
+
+    <button id="chantBtn" class="chant-btn">
+      📿 Chant (+1)
+    </button>
+
+    <button id="resetBtn" class="reset-btn">
+      Reset
+    </button>
+  </div>
+
+  <footer class="footer">
+    Built with 🕉️ by <span>Nidhi Dwivedi</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

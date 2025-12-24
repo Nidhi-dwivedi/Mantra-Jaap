@@ -1,0 +1,140 @@
+body {
+  margin: 0;
+  height: 100vh;
+  font-family: "Segoe UI", sans-serif;
+  background: radial-gradient(circle at top, #fff2db, #f4a261);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Lotus glow */
+.lotus-bg {
+  position: absolute;
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(255,153,51,0.3), transparent 70%);
+  border-radius: 50%;
+  filter: blur(50px);
+}
+
+/* Main card */
+.container {
+  position: relative;
+  background: #fffaf3;
+  width: 380px;
+  padding: 34px;
+  border-radius: 24px;
+  text-align: center;
+  box-shadow:
+    0 12px 30px rgba(0,0,0,0.15),
+    inset 0 0 25px rgba(255,153,51,0.25);
+}
+
+/* Om */
+.om {
+  font-size: 44px;
+  color: #e65100;
+  margin-bottom: 6px;
+}
+
+h1 {
+  margin: 0;
+  color: #7a2e00;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #9c4a00;
+  margin-bottom: 20px;
+}
+
+/* Inputs */
+select,
+textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid #e6a85c;
+  background: #fff3e0;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+textarea {
+  height: 90px;
+}
+
+/* Save button */
+#saveBtn {
+  width: 100%;
+  padding: 10px;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(145deg, #ff9800, #e65100);
+  color: white;
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+
+/* Mantra box */
+.mantra-box {
+  background: #fff0da;
+  border-radius: 18px;
+  padding: 18px;
+  margin: 18px 0;
+  font-style: italic;
+  white-space: pre-line;
+  color: #5d2600;
+}
+
+/* Counter */
+.counter {
+  font-size: 22px;
+  font-weight: bold;
+  color: #7a2e00;
+  margin-bottom: 16px;
+}
+
+/* Chant button */
+.chant-btn {
+  width: 100%;
+  padding: 14px;
+  font-size: 18px;
+  border-radius: 20px;
+  border: none;
+  background: linear-gradient(145deg, #ffb300, #f57c00);
+  color: white;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.chant-btn:hover {
+  transform: scale(1.04);
+}
+
+/* Reset */
+.reset-btn {
+  background: transparent;
+  border: none;
+  color: #9c4a00;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* Footer */
+.footer {
+  position: fixed;
+  bottom: 12px;
+  width: 100%;
+  text-align: center;
+  font-size: 13px;
+  color: #9c4a00;
+  opacity: 0.8;
+}
+
+.footer span {
+  font-weight: 600;
+  color: #7a2e00;
+}
