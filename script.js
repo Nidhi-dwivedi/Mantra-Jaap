@@ -34,8 +34,13 @@ const elements = {
   sessionCount: document.getElementById("sessionCount"),
   sessionRate: document.getElementById("sessionRate"),
   sessionResetBtn: document.getElementById("sessionResetBtn"),
-  settingsPanel: document.getElementById("settingsPanel"),
-  toolsPanel: document.getElementById("toolsPanel"),
+  openSettingsBtn: document.getElementById("openSettingsBtn"),
+  openToolsBtn: document.getElementById("openToolsBtn"),
+  closeSettingsBtn: document.getElementById("closeSettingsBtn"),
+  closeToolsBtn: document.getElementById("closeToolsBtn"),
+  settingsSheet: document.getElementById("settingsSheet"),
+  toolsSheet: document.getElementById("toolsSheet"),
+  sheetBackdrop: document.getElementById("sheetBackdrop"),
 };
 
 const mantras = {
@@ -98,7 +103,6 @@ init();
 function init() {
   loadState();
   bindEvents();
-  initializeResponsivePanels();
   renderAll();
   if (state.focusRunning) startFocusInterval();
 }
@@ -119,39 +123,27 @@ function bindEvents() {
   elements.alarmSelect.addEventListener("change", onAlarmChange);
   elements.goalSelect.addEventListener("change", onGoalChange);
   elements.sessionResetBtn.addEventListener("click", onSessionReset);
+  elements.openSettingsBtn.addEventListener("click", () => openSheet("settings"));
+  elements.openToolsBtn.addEventListener("click", () => openSheet("tools"));
+  elements.closeSettingsBtn.addEventListener("click", closeSheets);
+  elements.closeToolsBtn.addEventListener("click", closeSheets);
+  elements.sheetBackdrop.addEventListener("click", closeSheets);
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeSheets();
+  });
 }
 
-function initializeResponsivePanels() {
-  const mediaQuery = window.matchMedia("(max-width: 900px), (max-height: 760px)");
+function openSheet(type) {
+  const showSettings = type === "settings";
+  elements.settingsSheet.classList.toggle("hidden", !showSettings);
+  elements.toolsSheet.classList.toggle("hidden", showSettings);
+  elements.sheetBackdrop.classList.remove("hidden");
+}
 
-  const applyPanelState = () => {
-    if (mediaQuery.matches) {
-      elements.settingsPanel.open = false;
-      elements.toolsPanel.open = false;
-    }
-  };
-
-  applyPanelState();
-
-  const onPanelToggle = (openedPanel, otherPanel) => {
-    if (!mediaQuery.matches) return;
-    if (openedPanel.open) {
-      otherPanel.open = false;
-    }
-  };
-
-  elements.settingsPanel.addEventListener("toggle", () => {
-    onPanelToggle(elements.settingsPanel, elements.toolsPanel);
-  });
-  elements.toolsPanel.addEventListener("toggle", () => {
-    onPanelToggle(elements.toolsPanel, elements.settingsPanel);
-  });
-
-  if (typeof mediaQuery.addEventListener === "function") {
-    mediaQuery.addEventListener("change", applyPanelState);
-  } else if (typeof mediaQuery.addListener === "function") {
-    mediaQuery.addListener(applyPanelState);
-  }
+function closeSheets() {
+  elements.settingsSheet.classList.add("hidden");
+  elements.toolsSheet.classList.add("hidden");
+  elements.sheetBackdrop.classList.add("hidden");
 }
 
 function loadState() {
@@ -177,7 +169,12 @@ function saveState() {
 
 function renderAll() {
   document.body.setAttribute("data-theme", state.theme);
-  elements.themeToggle.textContent = state.theme === "dark" ? "Light Mode" : "Dark Mode";
+  elements.themeToggle.textContent = state.theme === "dark" ? "\u2600" : "\u263D";
+  elements.themeToggle.setAttribute(
+    "aria-label",
+    state.theme === "dark" ? "Switch to light theme" : "Switch to dark theme"
+  );
+  elements.themeToggle.title = state.theme === "dark" ? "Light Mode" : "Dark Mode";
 
   elements.mantraSelect.value = state.selectedMantra;
   elements.customMantra.value = state.customMantra;

@@ -10,36 +10,24 @@
   <main class="app" id="appCard">
     <header class="topbar">
       <p class="kicker">Sacred Practice</p>
-      <button id="themeToggle" class="ghost-btn" type="button">Dark Mode</button>
+      <div class="top-actions">
+        <button id="themeToggle" class="icon-btn" type="button" aria-label="Toggle theme">&#9790;</button>
+        <button id="openSettingsBtn" class="icon-btn" type="button" aria-label="Open settings">&#9881;</button>
+        <button id="openToolsBtn" class="icon-btn" type="button" aria-label="Open practice tools">&#128736;</button>
+      </div>
     </header>
 
     <section class="center-stage" aria-live="polite">
       <div class="om" aria-hidden="true">&#2384;</div>
       <h1>Mantra Jaap</h1>
-      <p class="subtitle">One breath. One bead. One mantra.</p>
 
-      <div class="quick-mantra">
-        <label class="field quick-field">
-          <span>Select Mantra</span>
-          <select id="mantraSelect">
-            <option value="">- Select Mantra -</option>
-            <option value="gayatri">Gayatri Mantra</option>
-            <option value="krishna">Krishna Mahamantra</option>
-            <option value="custom">+ Add Your Own Mantra</option>
-          </select>
-        </label>
-
-        <textarea id="customMantra" class="hidden" placeholder="Write your mantra here..."></textarea>
-        <button id="saveBtn" class="subtle-btn hidden" type="button">Save Mantra</button>
-      </div>
-
-      <p id="mantraSanskrit" class="mantra-text">Choose a mantra and begin your sadhana.</p>
+      <p id="mantraSanskrit" class="mantra-text">Choose a mantra from settings and begin your sadhana.</p>
       <p id="mantraTranslit" class="mantra-translit"></p>
 
       <div class="progress-wrap" aria-label="jaap progress">
-        <svg class="progress-ring" width="182" height="182" viewBox="0 0 182 182" aria-hidden="true">
-          <circle class="ring-bg" cx="91" cy="91" r="77"></circle>
-          <circle id="progressCircle" class="ring-fill" cx="91" cy="91" r="77"></circle>
+        <svg class="progress-ring" width="196" height="196" viewBox="0 0 196 196" aria-hidden="true">
+          <circle class="ring-bg" cx="98" cy="98" r="84"></circle>
+          <circle id="progressCircle" class="ring-fill" cx="98" cy="98" r="84"></circle>
         </svg>
         <div class="counter" id="counter">
           <span id="count">0</span>
@@ -49,85 +37,102 @@
 
       <p id="completionMessage" class="completion-message" aria-live="polite"></p>
       <button id="chantBtn" class="chant-btn" type="button">Chant</button>
-      <button id="resetBtn" class="subtle-btn" type="button">Reset</button>
-    </section>
-
-    <section class="secondary">
-      <details class="panel" id="settingsPanel">
-        <summary>Settings</summary>
-        <div class="panel-body">
-          <label class="switch-item">
-            <input id="translitToggle" type="checkbox" checked />
-            <span>Show transliteration</span>
-          </label>
-          <label class="switch-item">
-            <input id="hapticToggle" type="checkbox" checked />
-            <span>Mobile haptics</span>
-          </label>
-        </div>
-      </details>
-
-      <details class="panel" id="toolsPanel">
-        <summary>Practice Tools</summary>
-        <div class="panel-body tools-grid">
-          <div class="tool-card streak-line">
-            <span class="tool-label">Streak</span>
-            <strong><span id="streakCount">0</span> day(s)</strong>
-          </div>
-
-          <div class="tool-card goal-card">
-            <div class="goal-head">
-              <span class="tool-label">Daily Goal</span>
-              <select id="goalSelect">
-                <option value="27">27</option>
-                <option value="54">54</option>
-                <option value="108">108</option>
-              </select>
-            </div>
-            <div class="goal-track" aria-hidden="true">
-              <div id="goalFill" class="goal-fill"></div>
-            </div>
-            <p id="goalMeta" class="goal-meta">0 / 108 today</p>
-          </div>
-
-          <div class="tool-card focus-compact" id="focusBox">
-            <div class="focus-head">
-              <span>Focus Mode</span>
-              <strong id="focusTime">05:00</strong>
-            </div>
-            <div class="focus-main">
-              <select id="focusSelect">
-                <option value="5">5 min</option>
-                <option value="10">10 min</option>
-                <option value="15">15 min</option>
-              </select>
-              <button id="focusToggleBtn" class="subtle-btn" type="button">Start</button>
-              <button id="focusResetBtn" class="subtle-btn" type="button">Reset</button>
-            </div>
-            <div class="focus-alarm">
-              <span>Meditation alarm</span>
-              <select id="alarmSelect">
-                <option value="soft">Soft Bell</option>
-                <option value="temple">Temple Bell</option>
-                <option value="chime">Chime</option>
-              </select>
-            </div>
-            <div id="focusExtras" class="focus-extras hidden">
-              <button id="focusMinusBtn" class="tiny-btn" type="button">-1m</button>
-              <button id="focusPlusBtn" class="tiny-btn" type="button">+1m</button>
-            </div>
-          </div>
-
-          <div class="tool-card session-card">
-            <span class="tool-label">Session</span>
-            <strong id="sessionCount">0 chants</strong>
-            <small id="sessionRate">0.0 chants/min</small>
-            <button id="sessionResetBtn" class="tiny-btn" type="button">Reset Session</button>
-          </div>
-        </div>
-      </details>
+      <button id="resetBtn" class="reset-btn" type="button">Reset</button>
     </section>
   </main>
+
+  <div id="sheetBackdrop" class="sheet-backdrop hidden" aria-hidden="true"></div>
+
+  <section id="settingsSheet" class="sheet hidden" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+    <div class="sheet-head">
+      <h2 id="settingsTitle">Settings</h2>
+      <button id="closeSettingsBtn" class="sheet-close" type="button" aria-label="Close settings">&times;</button>
+    </div>
+    <div class="sheet-body">
+      <label class="field">
+        <span>Select Mantra</span>
+        <select id="mantraSelect">
+          <option value="">- Select Mantra -</option>
+          <option value="gayatri">Gayatri Mantra</option>
+          <option value="krishna">Krishna Mahamantra</option>
+          <option value="custom">+ Add Your Own Mantra</option>
+        </select>
+      </label>
+      <textarea id="customMantra" class="hidden" placeholder="Write your mantra here..."></textarea>
+      <button id="saveBtn" class="subtle-btn hidden" type="button">Save Mantra</button>
+      <label class="switch-item">
+        <input id="translitToggle" type="checkbox" checked />
+        <span>Show transliteration</span>
+      </label>
+      <label class="switch-item">
+        <input id="hapticToggle" type="checkbox" checked />
+        <span>Mobile haptics</span>
+      </label>
+    </div>
+  </section>
+
+  <section id="toolsSheet" class="sheet hidden" role="dialog" aria-modal="true" aria-labelledby="toolsTitle">
+    <div class="sheet-head">
+      <h2 id="toolsTitle">Practice Tools</h2>
+      <button id="closeToolsBtn" class="sheet-close" type="button" aria-label="Close practice tools">&times;</button>
+    </div>
+    <div class="sheet-body tools-grid">
+      <div class="tool-card streak-line">
+        <span class="tool-label">Streak</span>
+        <strong><span id="streakCount">0</span> day(s)</strong>
+      </div>
+
+      <div class="tool-card goal-card">
+        <div class="goal-head">
+          <span class="tool-label">Daily Goal</span>
+          <select id="goalSelect">
+            <option value="27">27</option>
+            <option value="54">54</option>
+            <option value="108">108</option>
+          </select>
+        </div>
+        <div class="goal-track" aria-hidden="true">
+          <div id="goalFill" class="goal-fill"></div>
+        </div>
+        <p id="goalMeta" class="goal-meta">0 / 108 today</p>
+      </div>
+
+      <div class="tool-card focus-compact" id="focusBox">
+        <div class="focus-head">
+          <span>Focus Mode</span>
+          <strong id="focusTime">05:00</strong>
+        </div>
+        <div class="focus-main">
+          <select id="focusSelect">
+            <option value="5">5 min</option>
+            <option value="10">10 min</option>
+            <option value="15">15 min</option>
+          </select>
+          <button id="focusToggleBtn" class="subtle-btn" type="button">Start</button>
+          <button id="focusResetBtn" class="subtle-btn" type="button">Reset</button>
+        </div>
+        <div class="focus-alarm">
+          <span>Meditation alarm</span>
+          <select id="alarmSelect">
+            <option value="soft">Soft Bell</option>
+            <option value="temple">Temple Bell</option>
+            <option value="chime">Chime</option>
+          </select>
+        </div>
+        <div id="focusExtras" class="focus-extras hidden">
+          <button id="focusMinusBtn" class="tiny-btn" type="button">-1m</button>
+          <button id="focusPlusBtn" class="tiny-btn" type="button">+1m</button>
+        </div>
+      </div>
+
+      <div class="tool-card session-card">
+        <span class="tool-label">Session</span>
+        <strong id="sessionCount">0 chants</strong>
+        <small id="sessionRate">0.0 chants/min</small>
+        <button id="sessionResetBtn" class="tiny-btn" type="button">Reset Session</button>
+      </div>
+    </div>
+  </section>
 
   <footer class="footer-note">Built with ❤️ by Nidhi Rani</footer>
   <script src="script.js"></script>
